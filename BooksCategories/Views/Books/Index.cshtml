@@ -1,0 +1,56 @@
+﻿@using Books.Data
+@model BooksCategories.Models.IndexViewModel
+@if (Model.Message != null)
+{
+    <div class="alert alert-success">
+        @Model.Message
+    </div>
+}
+<form action="/books/index" id="categoryForm">
+    <div class="row">
+        <div class="col-md-6">
+            <select name="categoryId" id="categorySelect" class="form-control">
+                <option>Select a category</option>
+                @foreach (Category category in Model.Categories)
+                {
+                    if (Model.CurrentCategoryId != null && Model.CurrentCategoryId == category.Id)
+                    {
+                        <option selected value="@category.Id">@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-hover table-striped table-bordered">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year Published</th>
+        <th>Page Count</th>
+        <th>Category</th>
+    </tr>
+    @foreach (Book book in Model.Books)
+    {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.YearPublished</td>
+            <td>@book.PageCount</td>
+            <td>@book.CategoryName</td>
+        </tr>
+    }
+</table>
+
+@section scripts
+{
+    <script src="~/Scripts/index.js"></script>
+}
